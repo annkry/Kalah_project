@@ -25,7 +25,6 @@ def play_match(strategy1_name, strategy2_name, num_games = 100):
     metrics = {
         "moves": [],
         "score_diff": [],
-        "extra_turns": {strategy1_name: [], strategy2_name: []},
         "time_taken": {strategy1_name: [], strategy2_name: []}
     }
     print(f"Playing {num_games} games between {strategy1_name} and {strategy2_name}...")
@@ -101,8 +100,6 @@ def play_match(strategy1_name, strategy2_name, num_games = 100):
         # collect game stats
         metrics["moves"].append(move_count)
         metrics["score_diff"].append(result)
-        metrics["extra_turns"][player0_name].append(count_extra_moves(game, 0))
-        metrics["extra_turns"][player1_name].append(count_extra_moves(game, 1))
         metrics["time_taken"][player0_name].append(p1_time)
         metrics["time_taken"][player1_name].append(p2_time)
 
@@ -111,8 +108,6 @@ def play_match(strategy1_name, strategy2_name, num_games = 100):
     avg_metrics = {
         "avg_moves": sum(metrics["moves"]) / num_games,
         "avg_score_diff": sum(abs(x) for x in metrics["score_diff"]) / num_games,
-        strategy1_name + "_avg_extra": sum(metrics["extra_turns"][strategy1_name]) / num_games,
-        strategy2_name + "_avg_extra": sum(metrics["extra_turns"][strategy2_name]) / num_games,
         strategy1_name + "_avg_time": sum(metrics["time_taken"][strategy1_name]) / num_games,
         strategy2_name + "_avg_time": sum(metrics["time_taken"][strategy2_name]) / num_games,
     }
@@ -134,13 +129,12 @@ def save_results_to_csv(results, filename="tournament_results.csv"):
         writer = csv.writer(file)
         writer.writerow([
             "Match", "Winner", "Win ratio", "Avg moves", "Avg score diff",
-            "P1 extra", "P2 extra", "P1 time (s)", "P2 time (s)"
+            "P1 time (s)", "P2 time (s)"
         ])
         for s1, s2, ratio, winner, metrics in results:
             writer.writerow([
                 f"{s1} vs {s2}", winner, ratio,
                 metrics["avg_moves"], metrics["avg_score_diff"],
-                metrics[s1 + "_avg_extra"], metrics[s2 + "_avg_extra"],
                 metrics[s1 + "_avg_time"], metrics[s2 + "_avg_time"]
             ])
 
