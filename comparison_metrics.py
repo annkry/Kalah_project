@@ -9,7 +9,7 @@ from KalahGame import KalahGame
 from KalahMCTS import KalahMCTS
 from KalahMCTS import MCTSNode
 from KalahMinimax import minimax_move
-from Kalahevaluate import evaluate, count_extra_moves
+from Kalahevaluate import evaluate
 
 from NRPA import nrpa
 from NMCS import nmcs
