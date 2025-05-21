@@ -51,7 +51,7 @@ python tune_evaluate_weights.py
 
 ## Requirements
 ```bash
-pip install matplotlib numpy
+pip install -r requirements.txt
 ```
 
 ---
